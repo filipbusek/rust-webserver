@@ -1,1 +1,0 @@
-/home/filip/Dokumenty/git/github/rust-webserver/target/debug/rust-webserver: /home/filip/Dokumenty/git/github/rust-webserver/src/config.rs /home/filip/Dokumenty/git/github/rust-webserver/src/main.rs /home/filip/Dokumenty/git/github/rust-webserver/src/workers.rs
