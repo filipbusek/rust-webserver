@@ -1,4 +1,4 @@
 FROM debian:stable-slim
-COPY rust_webserver /root/rust_webserver
+COPY rust-webserver /usr/bin/rust-webserver
 RUN mkdir -p /var/www/html
-ENTRYPOINT /root/rust_webserver
+ENTRYPOINT /usr/bin/rust-webserver
