@@ -93,7 +93,7 @@ impl Config {
                     set_document_root = true;
                 }
                 "--help"|"-h" => {
-                    println!("Current version: 0.1.0
+                    println!("Current version: 0.1.2
 Rust webserver which will return random gif file from specified folder
 
 How to use:
@@ -102,7 +102,7 @@ How to use:
     --ip: Specifies on which ip should webserver listen for connections
     --worker, -w: Specifies number of available workers. Default is 4. Max value is 256
 ");
-                    std::process::exit(0x0001);
+                    std::process::exit(0x0000);
                 }
                 _ => {
                     println!("Invalid argument: {}\nUse -h or --help to get available arguments\n", argument);
