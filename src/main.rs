@@ -15,6 +15,20 @@ fn handle_connection(mut stream: TcpStream, docroot: String) {
 
 
     let get = b"GET /image.gif HTTP/1.1\r\n";
+    let healtcheck = b"GET /healthcheck HTTP/1.1\r\n";
+    let readycheck = b"GET /readycheck HTTP/1.1\r\n";
+
+    if buffer.starts_with(healtcheck) {
+        let response = format!("HTTP/1.1 200 OK\r\nServerd-by: my_rust_http_server\r\nContent-Length: 27\r\n\r\nPod is happy, so I´m happy");
+        stream.write(response.as_bytes()).unwrap();
+        stream.flush().unwrap();
+    }
+
+    if buffer.starts_with(readycheck) {
+        let response = format!("HTTP/1.1 200 OK\r\nServerd-by: my_rust_http_server\r\nContent-Length: 12\r\n\r\nPod is ready");
+        stream.write(response.as_bytes()).unwrap();
+        stream.flush().unwrap();
+    }
 
     if buffer.starts_with(get) {
         let status_line = "HTTP/1.1 200 OK";
@@ -39,9 +53,7 @@ fn handle_connection(mut stream: TcpStream, docroot: String) {
         println!("Send {} to {}", file, stream.local_addr().unwrap());
     }
     else {
-        let status_line = "HTTP/1.1 403 FORBIDDEN";
-        //let contents = fs::read_to_string("forbidden.html").unwrap();
-        let response = format!("{}\r\nServerd-by: my_rust_http_server\r\nContent-Length: 13\r\n403 Forbidden", status_line);
+        let response = format!("HTTP/1.1 403 FORBIDDEN\r\nServerd-by: my_rust_http_server\r\nContent-Length: 13\r\n\r\n403 Forbidden");
         stream.write(response.as_bytes()).unwrap();
         stream.flush().unwrap();
     }
@@ -57,7 +69,7 @@ fn main() {
     let server_config: Config = Config::new_config(argumets);
     let listener_config = return_listener_config(server_config.ip, server_config.port.to_string());
     let listener = TcpListener::bind(listener_config).unwrap();
-    let pool = ThreadPool::new(4,);
+    let pool = ThreadPool::new(server_config.worker_count,);
     for stream in listener.incoming() {
         let stream = stream.unwrap();
         let document_root = server_config.docroot.clone();
