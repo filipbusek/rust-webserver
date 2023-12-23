@@ -101,6 +101,7 @@ How to use:
     --port, -p: Specifies port for incoming connections
     --ip: Specifies on which ip should webserver listen for connections
     --worker, -w: Specifies number of available workers. Default is 4. Max value is 256
+    --help, -h: Shows this message
 ");
                     std::process::exit(0x0000);
                 }
