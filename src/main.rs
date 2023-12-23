@@ -34,12 +34,22 @@ fn handle_connection(mut stream: TcpStream, docroot: String) {
         let status_line = "HTTP/1.1 200 OK";
 
         let mut r = rand::thread_rng();
+        /*
         let files = fs::read_dir(docroot).expect("Cannot access directory").filter_map(|res| res.ok()).map(|dir_entry| dir_entry.path()).filter_map(|path| {
                 if path.extension().map_or(false, |ext| ext == "gif") {
                     Some(path)
                 } else {
                     None
                 }
+            }).collect::<Vec<_>>();
+        */
+        let files = fs::read_dir(docroot).expect("Cannot access directory").filter_map(|res| res.ok()).filter_map(|dir_entry| {
+            let path = dir_entry.path();
+            if path.is_file() && path.extension().map_or(false, |ext| ext == "gif") {
+                Some(path)
+            } else {
+                None
+            }
             }).collect::<Vec<_>>();
 
         let file_index = r.gen_range(0..files.len());
