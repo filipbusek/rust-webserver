@@ -93,7 +93,7 @@ impl Config {
                     set_document_root = true;
                 }
                 "--help"|"-h" => {
-                    println!("Current version: 0.1.2
+                    println!("Current version: 0.1.3
 Rust webserver which will return random gif file from specified folder
 
 How to use:
