@@ -24,6 +24,6 @@ cargo build --release
 
 # Build OCI image
 ``` bash
-cp -a ./target/release/rust-webserver
+cp -a ./target/release/rust-webserver ./rust-webserver/rust-webserver
 docker build . -t $my_name/$container_name:$tag
 ```
