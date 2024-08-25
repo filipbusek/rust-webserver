@@ -22,15 +22,7 @@ impl Config {
 
         for argument in arguments {
             if set_ip == true {
-                let test_ip = String::from(&argument);
-                let test_ip_port_string = [test_ip, "8080".to_string()].join(":");
-                ip = match TcpListener::bind(test_ip_port_string) {
-                    Ok(_) => argument,
-                    Err(e) => {
-                        println!("Failed to bind ip {} with error:\n\t{}", argument, e);
-                        std::process::exit(0x0002);
-                    }
-                };
+                ip = argument;
                 set_ip = false;
                 continue;
             }
@@ -111,6 +103,16 @@ How to use:
                 }
             };
         }
+
+        //let test_ip_port_string = [&ip, &port_number.to_string()].join(":");
+        match TcpListener::bind(format!("{}:{}", ip, port_number.to_string())) {
+            Ok(_) => println!("Binding to ip {} and port {}", ip, port_number),
+            Err(e) => {
+                println!("Failed to bind ip {} and port {} with error:\n\t{}", ip, port_number, e);
+                std::process::exit(0x0002);
+            }
+        };
+
         return Config { port: (port_number), docroot: (docroot), ip: (ip), worker_count: (worker_count) };
     }
 }
