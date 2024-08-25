@@ -104,7 +104,6 @@ How to use:
             };
         }
 
-        //let test_ip_port_string = [&ip, &port_number.to_string()].join(":");
         match TcpListener::bind(format!("{}:{}", ip, port_number.to_string())) {
             Ok(_) => println!("Binding to ip {} and port {}", ip, port_number),
             Err(e) => {
